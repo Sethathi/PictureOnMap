@@ -13,10 +13,10 @@
         android:apiKey="0-i35T2_ublS14OwDz6-aM_2PlxlM03_P-kiAtA" 
     />
     
-    <LinearLayout android:id="@+id/zoom" 
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" 
-        android:layout_alignParentBottom="true" 
-        android:layout_centerHorizontal="true" 
-        /> 
+    <TextView android:id="@+id/wecome_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    
+    
 </LinearLayout>

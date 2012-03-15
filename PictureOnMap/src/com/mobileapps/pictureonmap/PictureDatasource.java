@@ -46,13 +46,8 @@ public class PictureDatasource {
 			return cursorToPicture(cursor);
 		}
 
-		/*public void deleteComment(Comment comment) {
-			long id = comment.getId();
-			System.out.println("Comment deleted with id: " + id);
-			database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
-					+ " = " + id, null);
-		}
-*/
+		
+
 		public List<Picture> getAllPictures() {
 			List<Picture> pictures = new ArrayList<Picture>();
 			Cursor cursor = database.query(SQLiteHelper.TABLE_PICTURES,
