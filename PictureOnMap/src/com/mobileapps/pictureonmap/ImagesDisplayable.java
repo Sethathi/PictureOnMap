@@ -5,16 +5,18 @@
  * 
  */
 
-
 package com.mobileapps.pictureonmap;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.media.ExifInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,12 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ImagesDisplayable extends Activity {
+
 	boolean is_geotag_set = true;
 	int pics_with_geotag = 0;
+	double lat = 0.0;
+	double lng = 0.0;
+	DmsToDegree dtd = new DmsToDegree();
+
+	ArrayList<String> picture_titles = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.images_displayable_on_map);
 		TextView tv = (TextView) findViewById(R.id.images_list);
@@ -42,14 +50,18 @@ public class ImagesDisplayable extends Activity {
 			}
 		});
 
-		// get the names of our images
+		// get the titles of our images
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
+
 			pic_title = file.getName();
+
 			try {
-				if (checkGeoTag(new ExifInterface("/sdcard/" + pic_title))) {
+				if (checkGeoTag(new ExifInterface("/sdcard/" + pic_title),
+						pic_title)) {
 					++pics_with_geotag;
 					picture_titles += file.getName() + "\n";
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -57,7 +69,8 @@ public class ImagesDisplayable extends Activity {
 			}
 
 		}
-		//Display a list of out images
+
+		// Display a list of out images
 		tv.setText(picture_titles);
 
 	}
@@ -69,12 +82,18 @@ public class ImagesDisplayable extends Activity {
 	 * @param exif
 	 * @return true if latitude tag set, false otherwise
 	 */
-	public boolean checkGeoTag(ExifInterface exif) {
+	public boolean checkGeoTag(ExifInterface exif, String pic_title) {
 
 		if (exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE) == null
-				&& exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE) == null)
+				&& exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE) == null
+				&& exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF) == null
+				&& exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF) == null)
 			is_geotag_set = false;
+		else {
+			picture_titles.add(pic_title);
 
+			is_geotag_set = true;
+		}
 		return is_geotag_set;
 	}
 
@@ -88,14 +107,18 @@ public class ImagesDisplayable extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.displayonamap) {
+
 			// if there are images with a geotag, we make it possible for the
 			// PictureOnMap activity to be started where those images will be
 			// displayed on a map.
-			if (pics_with_geotag > 0) {
-				startActivity(new Intent(ImagesDisplayable.this,
-						PictureOnMap.class));
-			}
 
+			if (pics_with_geotag > 0) {
+				Intent intent = new Intent(ImagesDisplayable.this,
+						PictureOnMap.class);
+
+				intent.putStringArrayListExtra("pics", picture_titles);
+				startActivity(intent);
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}

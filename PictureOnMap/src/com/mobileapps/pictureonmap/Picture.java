@@ -1,5 +1,9 @@
 package com.mobileapps.pictureonmap;
 
+import java.util.StringTokenizer;
+
+;
+
 /**
  * 
  * @author sethathi <sethathi@gmail.com>
@@ -7,50 +11,28 @@ package com.mobileapps.pictureonmap;
  */
 public class Picture {
 
-	private long id;
+	
+	private String title;
 	private String longitude;
 	private String latitude;
-	private String title;
-	private String snippet;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	public String getSnippet() {
-		return snippet;
+	public String getLongitude() {
+		return longitude;
 	}
-
-	public void setSnippet(String snippet) {
-		this.snippet = snippet;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
-
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	
+	
 }
