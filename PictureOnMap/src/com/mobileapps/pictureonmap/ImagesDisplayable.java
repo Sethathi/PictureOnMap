@@ -1,7 +1,7 @@
 /**
  * On this activity, images which have a geotag will be displayed(the image titles)
  * 
- * @author Sethathi <Sethathi@gmail.com>
+ * @author Sethathi
  * 
  */
 
