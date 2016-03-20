@@ -19,5 +19,5 @@ android {
 }
 
 ext {
-    supportLibVersion = '23.1.0'
+    supportLibVersion = '23.2.1'
 }
